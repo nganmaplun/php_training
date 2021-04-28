@@ -17,4 +17,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => ['auth']],function ()
+{
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/profile','Auth\ProfileController@index')->name('profile');
+    Route::post('/profile','Auth\ProfileController@update')->name('profile');
+});
+
+Route::get('logout', function ()
+{
+    auth()->logout();
+    Session()->flush();
+    return Redirect::to('/');
+})->name('logout');
