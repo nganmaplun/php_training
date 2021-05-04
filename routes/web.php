@@ -32,3 +32,5 @@ Route::get('logout', function ()
     Session()->flush();
     return Redirect::to('/');
 })->name('logout');
+Route::get('/timesheets','Timesheets\TimeSheetController@index')->name('timesheets');
+Route::resource('timesheets', 'Timesheets\TimeSheetController');

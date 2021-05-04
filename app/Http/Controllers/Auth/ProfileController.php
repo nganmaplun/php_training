@@ -24,8 +24,7 @@ class ProfileController extends Controller
 
             $filename = time().'.'.$avatar->getClientOriginalExtension();
 
-            Image::make($avatar)->resize(300, 300)->save(public_path('/images/avatars/'.$filename));
-
+            $request->avatar->move(public_path('images/avatars'), $filename);
             $user->avatar = $filename;
         }
         if($user->name != $request->get('name'))
@@ -37,7 +36,7 @@ class ProfileController extends Controller
             $user->mail = $request->get('mail');
         }
         $user->desc = $request->get('desc');
-        
+        $user->save();
         return view('auth.profile',compact('user'));
     }
 }
