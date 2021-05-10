@@ -4,7 +4,7 @@ namespace App\Http\Controllers\TimeSheets;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\TimeSheet;
+use App\Model\Timesheet;
 use Illuminate\Support\Facades\Auth;
 
 class TimeSheetController extends Controller
@@ -39,14 +39,11 @@ class TimeSheetController extends Controller
      */
     public function store(Request $request)
     {
-        $timesheet = new TimeSheet;
-        $timesheet->user_id = Auth::id();
-        $timesheet->date = $request->get('date');
-        $timesheet->problem = $request->get('problem');
-        $timesheet->plan = $request->get('plan');
-        $timesheet->save();
-
-        // Session::flash('success', 'Create new TimeSheet successfull');
+        $timesheet = Auth::user()->timesheets()->create([
+            'date' => $request->get('date'),
+            'problem' => $request->get('problem'),
+            'plan' =>  $request->get('plan')
+        ]);
 
         return redirect()->route('timesheets.index');
     }
@@ -57,7 +54,7 @@ class TimeSheetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(TimeSheet $timesheet)
+    public function show(Timesheet $timesheet)
     {
        return view('timesheets.show', compact('timesheet'));
     }
@@ -68,7 +65,7 @@ class TimeSheetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(TimeSheet $timesheet)
+    public function edit(Timesheet $timesheet)
     {
         return view('timesheets.edit', compact('timesheet'));
     }
@@ -80,7 +77,7 @@ class TimeSheetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TimeSheet $timesheet)
+    public function update(Request $request, Timesheet $timesheet)
     {
         $inputs = $request->all();
         if (!isset($inputs['completed'])) $inputs['completed'] = false;
@@ -95,9 +92,9 @@ class TimeSheetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TimeSheet $timesheet)
+    public function destroy(Timesheet $timesheet)
     {
-        $task->delete();
+        $timesheet->delete();
 
         return redirect()->route('timesheets.index')->with('message', 'Timesheet deleted successfully.');
     }

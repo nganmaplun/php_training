@@ -15,7 +15,6 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Date</th>
-              <th scope="col">Tasks</th>
               <th scope="col">Problem</th>
               <th scope="col">Plan</th>
               <th class="text-right">OPTIONS</th>
@@ -26,7 +25,6 @@
             <tr>
                 <th scope="row">{{ $timesheet['id'] }}</th>
                 <td>{{ $timesheet->date }}</td>
-                <td>{{ $timesheet[''] }}</td>
                 <td>{{ $timesheet->problem }}</td>
                 <td>{{ $timesheet->plan}}</td>
                 <td class="text-right">
@@ -38,13 +36,13 @@
                     </a>
                     <form action="{{ route('timesheets.destroy', $timesheet->id) }}" method="POST" style="display: inline;"
                       onsubmit="return confirm('Delete? Are you sure?');">
-                      {{csrf_field()}}
-                      <input type="hidden" name="_method" value="DELETE">
-        
+                     @csrf
+                     @method("delete")
                       <button type="submit" class="btn btn-sm btn-danger">
                         <i class="fas fa-trash"></i> Delete
                       </button>
                     </form>
+                 
                   </td>
             </tr>
             @endforeach

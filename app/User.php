@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function timesheets()
     {
-        return $this->hasMany('App\Model\TimeSheet');
+        return $this->hasMany('App\Model\Timesheet');
     }
 
 }
