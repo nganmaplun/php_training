@@ -17,8 +17,8 @@ class CreateTimesheetsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->date('date');
-            $table->text('problem');
-            $table->text('plan');
+            $table->text('problem')->nullable();
+            $table->text('plan')->nullable();
             $table->timestamps();
             $table->foreign('user_id')
                     ->references('id')->on('users')
