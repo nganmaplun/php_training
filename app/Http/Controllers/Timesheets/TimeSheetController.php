@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\TimeSheets;
+namespace App\Http\Controllers\Timesheets;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Timesheet;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreTimesheetRequest;
 
-class TimeSheetController extends Controller
+use Illuminate\Support\Facades\Auth;
+use Session;
+
+class TimesheetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,6 +20,13 @@ class TimeSheetController extends Controller
     public function index()
     {
         $timesheets = Timesheet::all();
+
+        return view('timesheets.index', compact('timesheets'));
+    }
+
+    public function list()
+    {
+        $timesheets = Auth::user()->timesheets()->get();
 
         return view('timesheets.index', compact('timesheets'));
     }
@@ -37,15 +47,14 @@ class TimeSheetController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTimesheetRequest $request)
     {
-        $timesheet = Auth::user()->timesheets()->create([
-            'date' => $request->get('date'),
-            'problem' => $request->get('problem'),
-            'plan' =>  $request->get('plan')
-        ]);
-
-        return redirect()->route('timesheets.index');
+        if ( $timesheet = Auth::user()->timesheets()->create($request->all()) ) {
+            Session::flash('success', 'Create timesheets was successful!');
+        } else {
+            Session::flash('error', 'Can not create timesheets!');
+        }
+        return redirect()->route('timesheets.list');
     }
 
     /**
@@ -81,9 +90,12 @@ class TimeSheetController extends Controller
     {
         $inputs = $request->all();
         if (!isset($inputs['completed'])) $inputs['completed'] = false;
-        $timesheet->update($inputs);
-
-        return redirect()->route('timesheets.index')->with('message', 'Timesheet updated successfully.');
+        if ($timesheet->update($inputs)) {
+            Session::flash('success', 'Edit timesheets was successful!');
+        } else {
+            Session::flash('error', 'Can not edit timesheets!');
+        }
+        return redirect()->route('timesheets.show');
     }
 
     /**
@@ -94,8 +106,12 @@ class TimeSheetController extends Controller
      */
     public function destroy(Timesheet $timesheet)
     {
-        $timesheet->delete();
-
-        return redirect()->route('timesheets.index')->with('message', 'Timesheet deleted successfully.');
+        if ($timesheet->delete()) {
+            Session::flash('success', 'Delete timesheets was successful!');
+        } else {
+            Session::flash('error', 'Can not delete timesheets!');
+        }
+        
+        return redirect()->route('timesheets.list');
     }
 }

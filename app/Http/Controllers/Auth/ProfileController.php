@@ -5,38 +5,44 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use Illuminate\Support\Facades\Auth;
 use Image;
+use Session;
+
 class ProfileController extends Controller
 {
-    public function index(){
+
+    public function show(){
         $user = Auth::user();
         return view('auth.profile',compact('user'));
     }
-    public function update(UpdateRequest $request){
+    public function edit(){
         $user = Auth::user();
-        // dd($request->user()->name);
+        return view('auth.edit', compact('user'));
+    }
 
+    public function update(UpdateProfileRequest $request){
+        $user = Auth::user();
+        $inputs = $request->all();
         if($request->hasFile('avatar'))
         {
-            $avatar = $request->file('avatar');
-
-            $filename = time().'.'.$avatar->getClientOriginalExtension();
-
-            $request->avatar->move(public_path('images/avatars'), $filename);
-            $user->avatar = $filename;
+            $inputs['avatar'] = $this->handleAvatar($request);
         }
-        if($user->name != $request->get('name'))
-        {
-            $user->name = $request->get('name');
+        if ( $user->update($inputs) ) {
+            Session::flash('success', 'Update profile was successful!');
+        } else {
+            Session::flash('error', 'Can not update profile!');
         }
-        if($user->mail != $request->get('mail'))
-        {
-            $user->mail = $request->get('mail');
-        }
-        $user->desc = $request->get('desc');
-        $user->save();
-        return view('auth.profile',compact('user'));
+        return redirect('profile');
     }
+
+    public function handleAvatar(UpdateProfileRequest $request){
+        $avatar = $request->file('avatar');
+        $filename = time().'.'.$avatar->getClientOriginalExtension();
+        $request->avatar->move(public_path('images/avatars'), $filename);
+
+        return $filename;
+    }
+
 }

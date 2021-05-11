@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateRequest extends FormRequest
+class UpdateProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,17 +27,17 @@ class UpdateRequest extends FormRequest
     {   
         $user = Auth::user();
         return [
-            'name'=> 'required|string|max:25|unique:users,name,'.$user->id,
+            'name'=> ['required','string','max:25', Rule::unique('users')->ignore($user->id)],
             'email' => ['required', 'string', 'email', 'max:255',  Rule::unique('users')->ignore($user->id)],
         ];
     }
     public function messages()
-{
-    return [
-        'name.required' => 'Please input name',
-        'email.required' => 'Please input email',
-        'name.unique' => 'Name is already exits',
-        'email.unique' => 'Email is already exits'
-    ];
-}
+    {
+        return [
+            'name.required' => 'Please input name',
+            'email.required' => 'Please input email',
+            'name.unique' => 'Name is already exits',
+            'email.unique' => 'Email is already exits'
+        ];
+    }
 }

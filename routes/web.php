@@ -22,8 +22,11 @@ Route::group(['middleware' => ['auth']],function ()
 {
     Route::get('/home', 'HomeController@index')->name('home');
 
-    Route::get('/profile','Auth\ProfileController@index')->name('profile');
-    Route::post('/profile','Auth\ProfileController@update')->name('profile');
+    Route::get('/profile','Auth\ProfileController@show')->name('profile');
+    Route::post('/profile','Auth\ProfileController@update')->name('profile.update');
+    Route::get('/profile/edit','Auth\ProfileController@edit')->name('profile.edit');
+    Route::post('/profile/edit','Auth\ProfileController@edit')->name('profile.edit');
+
 });
 
 Route::get('logout', function ()
@@ -32,5 +35,8 @@ Route::get('logout', function ()
     Session()->flush();
     return Redirect::to('/');
 })->name('logout');
-Route::get('/timesheets','Timesheets\TimeSheetController@index')->name('timesheets');
-Route::resource('timesheets', 'Timesheets\TimeSheetController');
+Route::get('timesheets/list','Timesheets\TimesheetController@list')->name('timesheets.list');
+Route::get('timesheets','Timesheets\TimesheetController@index')->name('timesheets');
+
+Route::resource('timesheets', 'Timesheets\TimesheetController');
+Route::resource('tasks', 'Timesheets\TaskController');

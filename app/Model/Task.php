@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -14,7 +13,7 @@ class Task extends Model
      * @var array
      */
     protected $fillable = [
-       'desc', 'use_time',
+      'name', 'desc', 'use_time',
     ];
 
     /**
