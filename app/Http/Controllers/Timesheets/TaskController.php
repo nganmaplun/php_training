@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\TimeSheet;
+namespace App\Http\Controllers\TimeSheets;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTaskRequest;
 use App\Model\Task;
+use Session;
 
-class Task extends Controller
+class TaskController extends Controller
 {
 
     /**
@@ -16,9 +18,9 @@ class Task extends Controller
      */
     public function index()
     {
-        $tasks = DB::table('tasks')->get();
+        $tasks = Task::all();
 
-        return view('timesheet.task', compact('tasks'));
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
@@ -28,7 +30,7 @@ class Task extends Controller
      */
     public function create()
     {
-        //
+        return view('tasks.create');
     }
 
     /**
@@ -37,14 +39,16 @@ class Task extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTaskRequest $request)
     {
         $task = new Task;
-        $task->create($request->all());
-
-        Session::flash('success', 'Create new task succsessfull');
-
-        return redirect()->route('task');
+        if ( $task->create($request->all()) ) {
+            Session::flash('success', 'Create task was successful!');
+        } else {
+            Session::flash('error', 'Can not create task!');
+        }
+        
+        return redirect()->back();
 
     }
 
@@ -54,11 +58,9 @@ class Task extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Task $task)
     {
-        $task = Task::find($id);
-
-        return ('timesheet.task.show', compact('task'));
+        return view('tasks.show', compact('task'));
     }
 
     /**
@@ -67,9 +69,9 @@ class Task extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Task $task)
     {
-        //
+        return view('task.edit', compact('task'));
     }
 
     /**
@@ -79,9 +81,17 @@ class Task extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
-       
+       $inputs = $request->all();
+       if (!isset($inputs['completed'])) $inputs['completed'] = false;
+
+       if ( $task->update($inputs) ) {
+            Session::flash('success', 'Edit task was successful!');
+        } else {
+            Session::flash('error', 'Can not Edit task!');
+        }
+       return redirect()->back();
 
     }
 
@@ -91,8 +101,13 @@ class Task extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        //
+        if ( $task->update($task->delete()) ) {
+            Session::flash('success', 'Delete task was successful!');
+        } else {
+            Session::flash('error', 'Can not delete task!');
+        }
+        return redirect()->back();
     }
 }
