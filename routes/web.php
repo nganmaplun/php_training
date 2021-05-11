@@ -21,7 +21,8 @@ Auth::routes();
 Route::group(['middleware' => ['auth']],function ()
 {
     Route::get('/home', 'HomeController@index')->name('home');
-
+    Route::get('/register', 'Auth\RegisterController@create')->name('register');
+    Route::post('/register', 'Auth\RegisterController@store')->name('regiter');
     Route::get('/profile','Auth\ProfileController@show')->name('profile');
     Route::post('/profile','Auth\ProfileController@update')->name('profile.update');
     Route::get('/profile/edit','Auth\ProfileController@edit')->name('profile.edit');
@@ -29,12 +30,7 @@ Route::group(['middleware' => ['auth']],function ()
 
 });
 
-Route::get('logout', function ()
-{
-    auth()->logout();
-    Session()->flush();
-    return Redirect::to('/');
-})->name('logout');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('timesheets/list','Timesheets\TimesheetController@list')->name('timesheets.list');
 Route::get('timesheets','Timesheets\TimesheetController@index')->name('timesheets');
 

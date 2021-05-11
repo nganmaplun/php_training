@@ -13,7 +13,7 @@ class RegisterRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,20 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:25','unique:users,name'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+        ];
+    }
+
+    public function message()
+    {
+        return [
+            'name.required' => 'Please input name',
+            'email.requird' => 'Please input email',
+            'name.unique' => 'Name is already exited',
+            'email.unique' => 'Email is already exited',
+            'name.max' => 'Name is shorter than 25'
         ];
     }
 }
