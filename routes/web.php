@@ -29,12 +29,7 @@ Route::group(['middleware' => ['auth']],function ()
 
 });
 
-Route::get('logout', function ()
-{
-    auth()->logout();
-    Session()->flush();
-    return Redirect::to('/');
-})->name('logout');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('timesheets/list','Timesheets\TimesheetController@list')->name('timesheets.list');
 Route::get('timesheets','Timesheets\TimesheetController@index')->name('timesheets');
 
