@@ -12,12 +12,20 @@
   <div class="col-md-12">
 
     <form action="{{ route('timesheets.store') }}" method="POST">
-      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
+      @csrf
+      @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+        </div>
+      @endif
       <div class="form-group">
         <label for="date-field">Date</label>
         <div class="input-group date datetimepicker" id="date" data-target-input="nearest">
-          <input type="date" name="date"  id="datepicker" class="form-control datetimepicker-input" data-target="#date" />
+          <input type="date" name="date"  id="datepicker" class="form-control datetimepicker-input" data-target="#date" value = "{{ date('Y-m-d') }}" />
           
         </div>
       </div>
@@ -34,7 +42,7 @@
 
       <div class="well well-sm">
         <button type="submit" class="btn btn-primary">Create</button>
-        <a class="btn btn-link pull-right" href="{{ route('timesheets.index') }}"><i class="fas fa-backward"></i> Back</a>
+        <a class="btn btn-link pull-right" href="{{ route('timesheets.list') }}"><i class="fas fa-backward"></i> Back</a>
       </div>
     </form>
 

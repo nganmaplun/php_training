@@ -7,6 +7,7 @@
 @section('content')
     <h2 class="text-center"> Date: {{ $timesheet->date }}</h2>
     <div class="container">
+        @include('shared.error')
         <table  class="table text-center">
             <thead class="table-warning">
                 <tr>
@@ -24,13 +25,8 @@
     </div>
 
     <h2 class="text-center"> List Tasks</h2>
-    <div class="text-center">
-        <a class="btn btn-success " href="{{ route('timesheets.create') }}"><i class="fas fa-plus"></i> Create new task</a>
-    </div>   
-
-    <div>
-        @yield('task')
+    <div class="col-md-12 text-center">
+        <a class="btn btn-link pull-right" href="{{ route('timesheets.list') }}"><i class="fas fa-backward"></i> Back</a>
     </div>
-
    
 @endsection
