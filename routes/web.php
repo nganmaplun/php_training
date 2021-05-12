@@ -14,10 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/register_user', 'Auth\RegisterController@create')->name('register_user');
-Route::post('/register_user', 'Auth\RegisterController@store')->name('regiter_user');
-Auth::routes();
-
+Route::get('/register', 'Auth\RegisterController@register')->name('register');
+Route::post('/register', 'Auth\RegisterController@store')->name('register');
+Auth::routes(['register' => false]);
 
 Route::group(['middleware' => ['auth']],function ()
 {

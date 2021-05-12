@@ -31,7 +31,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    public function create()
+    public function register()
     {
        return view('auth.register');
     }
@@ -47,6 +47,6 @@ class RegisterController extends Controller
             Session::flash('error', 'Register fail');
         }
 
-        return redirect()->route('home');
+        return redirect()->route('login');
     }
 }
