@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTaskRequest;
 use App\Model\Task;
+use App\Model\Timesheet;
 use Session;
 
 class TaskController extends Controller
@@ -28,9 +29,9 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Timesheet $timesheet)
     {
-        return view('tasks.create');
+        return view('tasks.create', compact('timesheet'));
     }
 
     /**
@@ -39,17 +40,15 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTaskRequest $request)
+    public function store(Timesheet $timesheet, StoreTaskRequest $request)
     {
-        $task = new Task;
-        if ( $task->create($request->all()) ) {
+        if ( $timesheet->tasks()->create($request->all()) ) {
             Session::flash('success', 'Create task was successful!');
         } else {
             Session::flash('error', 'Can not create task!');
         }
         
-        return redirect()->back();
-
+        return redirect()->route('timesheets.edit', $timesheet->id);
     }
 
     /**
@@ -58,9 +57,9 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Task $task)
+    public function show(Timesheet $timesheet, Task $task)
     {
-        return view('tasks.show', compact('task'));
+        return view('tasks.show', compact(['task', 'timesheet']));
     }
 
     /**
@@ -69,9 +68,9 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
+    public function edit(Timesheet $timesheet, Task $task)
     {
-        return view('task.edit', compact('task'));
+        return view('tasks.edit', compact(['timesheet','task']));
     }
 
     /**
@@ -81,7 +80,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request,Timesheet $timesheet, Task $task)
     {
        $inputs = $request->all();
        if (!isset($inputs['completed'])) $inputs['completed'] = false;
@@ -91,7 +90,7 @@ class TaskController extends Controller
         } else {
             Session::flash('error', 'Can not Edit task!');
         }
-       return redirect()->back();
+       return redirect()->route('timesheets.tasks.show', [$timesheet->id, $task->id]); 
 
     }
 
@@ -101,13 +100,13 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy(Timesheet $timesheet,Task $task)
     {
-        if ( $task->update($task->delete()) ) {
+        if ( $task->delete() ) {
             Session::flash('success', 'Delete task was successful!');
         } else {
             Session::flash('error', 'Can not delete task!');
         }
-        return redirect()->back();
+        return redirect()->route('timesheets.list', $timesheet->id);
     }
 }

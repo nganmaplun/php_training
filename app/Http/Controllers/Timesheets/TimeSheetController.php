@@ -27,7 +27,6 @@ class TimesheetController extends Controller
     public function list()
     {
         $timesheets = Auth::user()->timesheets()->get();
-
         return view('timesheets.index', compact('timesheets'));
     }
 
@@ -95,7 +94,7 @@ class TimesheetController extends Controller
         } else {
             Session::flash('error', 'Can not edit timesheets!');
         }
-        return redirect()->route('timesheets.show');
+        return redirect()->route('timesheets.show', $timesheet->id);
     }
 
     /**
