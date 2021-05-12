@@ -14,15 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/register_user', 'Auth\RegisterController@create')->name('register_user');
+Route::post('/register_user', 'Auth\RegisterController@store')->name('regiter_user');
 Auth::routes();
 
 
 Route::group(['middleware' => ['auth']],function ()
 {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/register', 'Auth\RegisterController@create')->name('register');
-    Route::post('/register', 'Auth\RegisterController@store')->name('regiter');
     Route::get('/profile','Auth\ProfileController@show')->name('profile');
     Route::post('/profile','Auth\ProfileController@update')->name('profile.update');
     Route::get('/profile/edit','Auth\ProfileController@edit')->name('profile.edit');

@@ -29,7 +29,7 @@ class Timesheet extends Model
 
     public function tasks()
     {
-        return $this->belongsToMany('App\Model\Task');
+        return $this->hasMany('App\Model\Task');
     }
     public function user()
     {

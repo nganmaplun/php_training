@@ -33,7 +33,6 @@ class CreateTimesheetsTable extends Migration
      */
     public function down()
     {   
-        
         Schema::table('timesheets', function (Blueprint $table) {
             $table->dropForeign('timesheets_user_id_foreign');
         });

@@ -25,8 +25,8 @@ class Task extends Model
        'id',
     ];
 
-    public function timesheets()
+    public function timesheet()
     {
-        return $this->belongsToMany('App\Model\TimeSheet');
+        return $this->belongsTo('App\Model\TimeSheet');
     }
 }
