@@ -34,4 +34,4 @@ Route::get('timesheets/list','Timesheets\TimesheetController@list')->name('times
 Route::get('timesheets','Timesheets\TimesheetController@index')->name('timesheets');
 
 Route::resource('timesheets', 'Timesheets\TimesheetController');
-Route::resource('tasks', 'Timesheets\TaskController');
+Route::resource('timesheets.tasks', 'Timesheets\TaskController');

@@ -10,7 +10,6 @@
 <div class="container">
 <div class="row">
   <div class="col-md-12">
-
     <form action="{{ route('timesheets.store') }}" method="POST">
       @csrf
       @if ($errors->any())
@@ -22,23 +21,23 @@
           </ul>
         </div>
       @endif
+
       <div class="form-group">
-        <label for="date-field">Date</label>
+        <label for="date-field">{{ __('Date') }} </label>
         <div class="input-group date datetimepicker" id="date" data-target-input="nearest">
           <input type="date" name="date"  id="datepicker" class="form-control datetimepicker-input" data-target="#date" value = "{{ date('Y-m-d') }}" />
-          
         </div>
       </div>
 
       <div class="form-group">
-        <label for="problem-field">Problem</label>
+        <label for="problem-field">{{ __('Problem') }}</label>
         <input class="form-control" type="text" name="problem" id="plan-field" value="" />
       </div>
+
       <div class="form-group">
-        <label for="plan-field">Plan</label>
+        <label for="plan-field">{{ __('Plan') }}</label>
         <textarea name="plan" id="plan-field" class="form-control" rows="3"></textarea>
       </div>
-     
 
       <div class="well well-sm">
         <button type="submit" class="btn btn-primary">Create</button>

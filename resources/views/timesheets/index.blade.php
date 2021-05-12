@@ -10,12 +10,14 @@
 @section('content')
     
 @if($timesheets->count())
+<div >
     <table class="table ">
       @include('shared.error')
         <thead  class="thead-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">Date</th>
+              <th scope="col">Tasks</th>
               <th scope="col">Problem</th>
               <th scope="col">Plan</th>
               <th class="text-right">OPTIONS</th>
@@ -26,8 +28,16 @@
             <tr>
                 <th scope="row">{{ $timesheet['id'] }}</th>
                 <td>{{ $timesheet->date }}</td>
+                <td>
+                    @foreach ($timesheet->tasks()->get() as $task)
+                    <a class="btn btn-sm btn-info" href="{{ route('timesheets.tasks.show',[ $timesheet->id, $task->id]) }}">
+                       {{ $task->name }}
+                    </a>
+                    @endforeach
+                </td>
                 <td>{{ $timesheet->problem }}</td>
-                <td>{{ $timesheet->plan}}</td>
+                <td>{{ $timesheet->plan }}</td>
+                
                 <td class="text-right">
                     <a class="btn btn-sm btn-primary" href="{{ route('timesheets.show', $timesheet->id) }}">
                       <i class="fas fa-eye"></i> View
@@ -54,5 +64,5 @@
     @else
     <h3 class="text-center alert alert-info">Empty!</h3>
     @endif
-
+</div>
 @endsection

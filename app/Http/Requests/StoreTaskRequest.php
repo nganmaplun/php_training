@@ -24,6 +24,7 @@ class StoreTaskRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'required|max:100',
             'desc' => 'required',
             'use_time' =>  'required|date_format:H:i'
 
@@ -33,6 +34,7 @@ class StoreTaskRequest extends FormRequest
     public function messages()
     {
         return [
+            'name.required' => 'Please input task name',
             'desc.required' => ' Please input desc',
             'use_time' => 'Please input use_time',
             'use_time.date_format' => 'Wrong time format'
