@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Timesheets;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Model\Timesheet;
-use App\Http\Requests\StoreTimesheetRequest;
+use App\Models\Timesheet;
+use App\Http\Requests\Timesheets\StoreTimesheetRequest;
 
 use Illuminate\Support\Facades\Auth;
 use Session;

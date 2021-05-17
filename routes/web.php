@@ -29,8 +29,12 @@ Route::group(['middleware' => ['auth']],function ()
 });
 
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('timesheets/list','Timesheets\TimesheetController@list')->name('timesheets.list');
-Route::get('timesheets','Timesheets\TimesheetController@index')->name('timesheets');
+Route::get('timesheets/list','TimesheetController@list')->name('timesheets.list');
+Route::get('timesheets','TimesheetController@index')->name('timesheets');
 
-Route::resource('timesheets', 'Timesheets\TimesheetController');
-Route::resource('timesheets.tasks', 'Timesheets\TaskController');
+Route::resource('timesheets', 'TimesheetController');
+Route::resource('timesheets.tasks', 'TaskController');
+
+Route::get('reports', 'ReportController@index')->name('reports');
+Route::post('reports/store', 'ReportController@store')->name('reports.store');
+Route::get('reports/store', 'ReportController@store')->name('reports.store');

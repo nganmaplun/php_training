@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +27,6 @@ class Task extends Model
 
     public function timesheet()
     {
-        return $this->belongsTo('App\Model\TimeSheet');
+        return $this->belongsTo('App\Models\TimeSheet');
     }
 }

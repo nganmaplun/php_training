@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Model;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 class Timesheet extends Model
 {
-    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +17,9 @@ class Timesheet extends Model
        'date', 'problem', 'plan'
     ];
 
+    protected $dateFormat = 'Y-m-d';
+
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -27,10 +29,15 @@ class Timesheet extends Model
        'id', 'user_id'
     ];
 
+    protected $dates = [
+        'date', 'created_at', 
+    ];
+
     public function tasks()
     {
-        return $this->hasMany('App\Model\Task');
+        return $this->hasMany('App\Models\Task');
     }
+
     public function user()
     {
         return $his->belongsTo('App\User');

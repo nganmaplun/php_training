@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\TimeSheets;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreTaskRequest;
-use App\Model\Task;
-use App\Model\Timesheet;
+use App\Http\Requests\Tasks\StoreTaskRequest;
+use App\Models\Task;
+use App\Models\Timesheet;
 use Session;
 
 class TaskController extends Controller
