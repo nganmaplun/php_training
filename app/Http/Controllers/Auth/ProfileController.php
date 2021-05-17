@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\Users\UpdateProfileRequest;
 use Illuminate\Support\Facades\Auth;
 use Image;
 use Session;

@@ -4,11 +4,9 @@ namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -28,6 +26,7 @@ class User extends Authenticatable
         'password', 'remember_token', 'role'
     ];
 
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -39,7 +38,11 @@ class User extends Authenticatable
 
     public function timesheets()
     {
-        return $this->hasMany('App\Model\Timesheet');
+        return $this->hasMany('App\Models\Timesheet');
     }
 
+    public function reports()
+    {
+        return $this->hasMany('App\Models\Report');
+    }
 }

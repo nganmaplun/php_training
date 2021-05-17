@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Timesheets;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Carbon\Carbon;
 
 class StoreTimesheetRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class StoreTimesheetRequest extends FormRequest
     public function rules()
     {
         return [
-            'date' => 'required|date|before_or_equal:now',
+            'date' => 'required|date|before_or_equal:now|after_or_equal:first day of this month',
         ];
     }
     public function messages()
