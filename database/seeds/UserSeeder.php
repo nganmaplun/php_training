@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TimeSheetSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class TimeSheetSeeder extends Seeder
      */
     public function run()
     {
-        
+        //
     }
 }

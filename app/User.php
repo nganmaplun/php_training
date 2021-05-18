@@ -4,6 +4,10 @@ namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Timesheet;
+use App\Models\Report;
+use App\Models\Team;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -38,11 +42,21 @@ class User extends Authenticatable
 
     public function timesheets()
     {
-        return $this->hasMany('App\Models\Timesheet');
+        return $this->hasMany(Timesheet::class);
     }
 
     public function reports()
     {
-        return $this->hasMany('App\Models\Report');
+        return $this->hasMany(Report::class);
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 }
