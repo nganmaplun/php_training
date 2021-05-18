@@ -55,7 +55,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ route('reports') }}" >Reports</a>
+                                <a class="nav-link active" aria-current="page" href="{{ route('reports.store') }}" >Reports</a>
                             </li>
                             
                             <li class="nav-item dropdown">

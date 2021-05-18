@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests\Timesheets;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Carbon\Carbon;
+use App\Http\Requests\Request;
 
-class StoreTimesheetRequest extends FormRequest
+class StoreTimesheetRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.

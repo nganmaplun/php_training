@@ -34,7 +34,6 @@ class ReportController extends Controller
         $reports = $this->getReport($request);
 
         return view('auth.report',compact('reports' ));
-
     } 
 
     public function getMonthReport(Request $request)
