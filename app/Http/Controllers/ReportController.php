@@ -19,17 +19,16 @@ class ReportController extends Controller
 
     public function store(Request $request)
     {
+       
         $month = $this->getMonthReport($request);
-        $created_times = $this->countCreatedTimes($month);
-        $lated_times = $this->countLatedTimes($month);
+        $createdTimes = $this->countCreatedTimes($month);
+        $latedTimes = $this->countLatedTimes($month);
         
-        if( $created_times!=0 ){
-            $report =Auth::user()->reports()->updateOrCreate(
-                ['month' => $month->month],
-                ['created_times' => $created_times,
-                'lated_times' => $lated_times]
-            );
-        } 
+        $report =Auth::user()->reports()->updateOrCreate(
+             ['month' => $month->month],
+             ['created_times' => $createdTimes,
+             'lated_times' => $latedTimes]    
+        ); 
         
         $reports = $this->getReport($request);
 
@@ -52,8 +51,7 @@ class ReportController extends Controller
     {
         return Auth::user()->timesheets()->whereYear('date', $month->year)
                                         ->whereMonth('date', $month->month)
-                                        // ->whereDate('created_at', '!=' ,'date')
-                                        ->whereRaw('DATE(created_at) != date')
+                                        ->whereRaw(('HOUR(created_at) >= 8'))
                                         ->get()->count();
     }
 
