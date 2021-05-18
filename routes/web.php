@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']],function ()
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('timesheets/list','TimesheetController@list')->name('timesheets.list');
 Route::get('timesheets','TimesheetController@index')->name('timesheets');
+Route::get('timesheets/export/', 'TimesheetController@export');
 
 Route::resource('timesheets', 'TimesheetController');
 Route::resource('timesheets.tasks', 'TaskController');
