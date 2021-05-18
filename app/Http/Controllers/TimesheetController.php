@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Timesheet;
 use App\Http\Requests\Timesheets\StoreTimesheetRequest;
+use App\Exports\TimesheetExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -95,6 +97,10 @@ class TimesheetController extends Controller
             Session::flash('error', 'Can not edit timesheets!');
         }
         return redirect()->route('timesheets.show', $timesheet->id);
+    }
+
+    public function export(){
+        return Excel::download(new TimesheetExport, 'timesheet.xlsx');
     }
 
     /**

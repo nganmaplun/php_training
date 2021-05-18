@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Task;
+use App\User;
 
 class Timesheet extends Model
 {
@@ -17,7 +19,7 @@ class Timesheet extends Model
        'date', 'problem', 'plan'
     ];
 
-    protected $dateFormat = 'Y-m-d';
+    // protected $dateFormat = 'Y-m-d';
 
 
     /**
@@ -29,17 +31,17 @@ class Timesheet extends Model
        'id', 'user_id'
     ];
 
-    protected $dates = [
-        'date', 'created_at', 
-    ];
+    // protected $dates = [
+    //     'date', 'created_at', 
+    // ];
 
     public function tasks()
     {
-        return $this->hasMany('App\Models\Task');
+        return $this->hasMany(Task::class);
     }
 
     public function user()
     {
-        return $his->belongsTo('App\User');
+        return $his->belongsTo(User::class);
     }
 }

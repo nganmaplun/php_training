@@ -10,7 +10,7 @@
 <div class="container">
 <div class="row">
   <div class="col-md-12">
-    <form action="{{ route('timesheets.store') }}" method="POST">
+    <form id="timesheets-form" action="{{ route('timesheets.store') }}" method="POST">
       @csrf
       @if ($errors->any())
         <div class="alert alert-danger">
@@ -40,11 +40,10 @@
       </div>
 
       <div class="well well-sm">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary" >Create</button>
         <a class="btn btn-link pull-right" href="{{ route('timesheets.list') }}"><i class="fas fa-backward"></i> Back</a>
       </div>
     </form>
-
   </div>
 </div>
 </div>
