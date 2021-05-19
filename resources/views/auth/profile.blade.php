@@ -23,6 +23,9 @@
                             <h5 for="desc" >{{ __('Desction') }}</h5>
                             <p> {{ $user->desc }}</p>
                         </div>
+                        <div>
+                            <h5 for="desc" >{{ __('Desction') }}</h5>
+                        </div>
                         <br>
                         <div class="col-md-12 text-center">
                             <a class="btn btn-link pull-right" href="{{ route('profile.edit') }}"><i class="fas fa-backward"></i> Edit Profile</a>

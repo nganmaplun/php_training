@@ -32,6 +32,7 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('timesheets/list','TimesheetController@list')->name('timesheets.list');
 Route::get('timesheets','TimesheetController@index')->name('timesheets');
 Route::get('timesheets/export/', 'TimesheetController@export')->name('timesheets.export');
+Route::get('timesheets/team', 'TimesheetController@viewTimesheetsOfTeam')->name('timesheets.team');
 
 Route::resource('timesheets', 'TimesheetController');
 Route::resource('timesheets.tasks', 'TaskController');

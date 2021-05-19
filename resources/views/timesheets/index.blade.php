@@ -19,6 +19,9 @@
         <thead  class="thead-dark">
             <tr>
               <th scope="col">#</th>
+              @can('viewAny', App\Models\Timesheet::class)
+                <th scope="col">User Name</th>
+              @endcan
               <th scope="col">Date</th>
               <th scope="col">Tasks</th>
               <th scope="col">Problem</th>
@@ -30,6 +33,9 @@
             @foreach ($timesheets as $timesheet)
             <tr>
                 <th scope="row">{{ $timesheet['id'] }}</th>
+                @can('viewAny', $timesheet)
+                  <td>{{ $timesheet->user->name }}</td>
+                @endcan
                 <td>{{ $timesheet->date }}</td>
                 <td>
                     @foreach ($timesheet->tasks()->get() as $task)

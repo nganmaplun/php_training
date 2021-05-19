@@ -8,6 +8,7 @@ use App\Models\Timesheet;
 use App\Http\Requests\Timesheets\StoreTimesheetRequest;
 use App\Exports\TimesheetExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Team;
 
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -31,6 +32,17 @@ class TimesheetController extends Controller
     {
         $timesheets = Auth::user()->timesheets()->get();
         return view('timesheets.index', compact('timesheets'));
+    }
+
+    public function viewTimesheetsOfTeam()
+    {
+        $manager = Auth::user();
+        $this->authorize('viewTeam', Timesheet::class, $manager);
+        $teams = Team::where('manager_id', $manager->id)->get();
+        $team = $teams[0];
+        $users = $team->users;
+
+        return view('timesheets.team', compact('users'));
     }
 
     /**

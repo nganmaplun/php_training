@@ -50,4 +50,9 @@ class TimesheetPolicy
         return $user->hasRole('admin');
     }
 
+    public function viewTeam(User $user)
+    {
+        return $user->hasRole('manager');
+    }
+
 }

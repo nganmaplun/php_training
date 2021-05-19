@@ -51,9 +51,9 @@ class User extends Authenticatable
         return $this->hasMany(Report::class);
     }
 
-    public function team()
+    public function teams()
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsToMany(Team::class, 'team_user', 'user_id', 'team_id');
     }
 
     public function roles()
@@ -63,8 +63,7 @@ class User extends Authenticatable
 
     public function hasRole(String $string)
     {
-        $user = Auth::user();
-        foreach($user->roles as $role)
+        foreach($this->roles as $role)
         {
             if($role->name == $string)
             {
