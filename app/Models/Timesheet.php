@@ -42,6 +42,7 @@ class Timesheet extends Model
 
     public function user()
     {
-        return $his->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
+
 }

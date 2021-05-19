@@ -9,6 +9,6 @@ class Team extends Model
 {
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class, 'team_user', 'team_id', 'user_id');
     }
 }

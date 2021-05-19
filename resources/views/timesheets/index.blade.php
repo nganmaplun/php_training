@@ -3,7 +3,10 @@
 <div>
   <h1>
     <i class="fas fa-align-justify"></i> TimeSheet
+    <br>
+    <a class="btn btn-success float-left" href="{{ route('timesheets.export') }}"><i class="fas fa-plus"></i> Export</a>
     <a class="btn btn-success float-right" href="{{ route('timesheets.create') }}"><i class="fas fa-plus"></i> Create new timesheet</a>
+    <br>
   </h1>
 </div>
 @endsection
@@ -16,6 +19,9 @@
         <thead  class="thead-dark">
             <tr>
               <th scope="col">#</th>
+              @can('viewAny', App\Models\Timesheet::class)
+                <th scope="col">User Name</th>
+              @endcan
               <th scope="col">Date</th>
               <th scope="col">Tasks</th>
               <th scope="col">Problem</th>
@@ -27,6 +33,9 @@
             @foreach ($timesheets as $timesheet)
             <tr>
                 <th scope="row">{{ $timesheet['id'] }}</th>
+                @can('viewAny', $timesheet)
+                  <td>{{ $timesheet->user->name }}</td>
+                @endcan
                 <td>{{ $timesheet->date }}</td>
                 <td>
                     @foreach ($timesheet->tasks()->get() as $task)
