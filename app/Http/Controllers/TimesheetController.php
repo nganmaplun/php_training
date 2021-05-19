@@ -21,6 +21,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Auth::user());
         $timesheets = Timesheet::all();
 
         return view('timesheets.index', compact('timesheets'));
@@ -77,6 +78,7 @@ class TimesheetController extends Controller
      */
     public function edit(Timesheet $timesheet)
     {
+        $this->authorize('update', $timesheet );
         return view('timesheets.edit', compact('timesheet'));
     }
 
@@ -89,6 +91,7 @@ class TimesheetController extends Controller
      */
     public function update(Request $request, Timesheet $timesheet)
     {
+        $this->authorize('update', $timesheet );
         $inputs = $request->all();
         if (!isset($inputs['completed'])) $inputs['completed'] = false;
         if ($timesheet->update($inputs)) {
@@ -100,6 +103,7 @@ class TimesheetController extends Controller
     }
 
     public function export(){
+        $this->authorize('export', Auth::user());
         return Excel::download(new TimesheetExport, 'timesheet.xlsx');
     }
 
@@ -111,6 +115,8 @@ class TimesheetController extends Controller
      */
     public function destroy(Timesheet $timesheet)
     {
+        $this->authorize('delete', $timesheet );
+
         if ($timesheet->delete()) {
             Session::flash('success', 'Delete timesheets was successful!');
         } else {

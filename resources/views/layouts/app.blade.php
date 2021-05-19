@@ -51,7 +51,26 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ route('timesheets.list') }}">Timesheets</a>
+                                <a class="nav-link active" aria-current="page" href="{{ route('users.index') }}">Users</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('Timesheets') }} <span class="caret"></span>
+                                </a>
+                                
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('timesheets.list') }}">
+                                        {{ Auth::user()->name }}'s 
+                                        {{ __(' Timesheets') }}
+                                    </a>
+                                    <a class="dropdown-item"  href="{{ route('timesheets.index') }}">
+                                        {{ __('All Timesheets') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
                             </li>
 
                             <li class="nav-item">

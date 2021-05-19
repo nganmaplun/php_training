@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth']],function ()
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('timesheets/list','TimesheetController@list')->name('timesheets.list');
 Route::get('timesheets','TimesheetController@index')->name('timesheets');
-Route::get('timesheets/export/', 'TimesheetController@export');
+Route::get('timesheets/export/', 'TimesheetController@export')->name('timesheets.export');
 
 Route::resource('timesheets', 'TimesheetController');
 Route::resource('timesheets.tasks', 'TaskController');
@@ -39,3 +39,8 @@ Route::resource('timesheets.tasks', 'TaskController');
 Route::get('reports', 'ReportController@index')->name('reports');
 Route::post('reports/store', 'ReportController@store')->name('reports.store');
 Route::get('reports/store', 'ReportController@store')->name('reports.store');
+
+Route::get('users/index', 'UserController@index')->name('users.index');
+Route::get('users/show', 'UserController@show')->name('users.show');
+Route::delete('users/destroy', 'UserController@index')->name('users.destroy');
+

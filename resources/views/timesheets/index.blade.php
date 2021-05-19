@@ -3,7 +3,10 @@
 <div>
   <h1>
     <i class="fas fa-align-justify"></i> TimeSheet
+    <br>
+    <a class="btn btn-success float-left" href="{{ route('timesheets.export') }}"><i class="fas fa-plus"></i> Export</a>
     <a class="btn btn-success float-right" href="{{ route('timesheets.create') }}"><i class="fas fa-plus"></i> Create new timesheet</a>
+    <br>
   </h1>
 </div>
 @endsection
