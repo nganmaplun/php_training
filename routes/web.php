@@ -20,7 +20,7 @@ Auth::routes(['register' => false]);
 
 Route::group(['middleware' => ['auth']],function ()
 {
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'TimesheetController@list')->name('home');
     Route::get('/profile','Auth\ProfileController@show')->name('profile');
     Route::post('/profile','Auth\ProfileController@update')->name('profile.update');
     Route::get('/profile/edit','Auth\ProfileController@edit')->name('profile.edit');
@@ -42,6 +42,6 @@ Route::post('reports/store', 'ReportController@store')->name('reports.store');
 Route::get('reports/store', 'ReportController@store')->name('reports.store');
 
 Route::get('users/index', 'UserController@index')->name('users.index');
-Route::get('users/show', 'UserController@show')->name('users.show');
-Route::delete('users/destroy', 'UserController@index')->name('users.destroy');
+Route::get('users/{user}', 'UserController@show')->name('users.show');
+Route::delete('users/{user}', 'UserController@destroy')->name('users.destroy');
 

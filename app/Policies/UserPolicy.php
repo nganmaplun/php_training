@@ -24,9 +24,8 @@ class UserPolicy
         return $user->hasRole('admin');
     }
 
-    public function delete(User $user)
+    public function delete(User $user, $user1)
     {
         return $user->hasRole('admin');
     }
-
 }

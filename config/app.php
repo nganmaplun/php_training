@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('', 'timesheet'),
 
     /*
     |--------------------------------------------------------------------------
@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         // ngan-nguyen add excel export provider 
         Maatwebsite\Excel\ExcelServiceProvider::class,
-
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -229,7 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         //ngan-nguyen add excel export 
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

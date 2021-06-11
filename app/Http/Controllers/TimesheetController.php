@@ -115,7 +115,7 @@ class TimesheetController extends Controller
     }
 
     public function export(){
-        $this->authorize('export', Auth::user());
+        $this->authorize('export', Timesheet::class, Auth::user());
         return Excel::download(new TimesheetExport, 'timesheet.xlsx');
     }
 
