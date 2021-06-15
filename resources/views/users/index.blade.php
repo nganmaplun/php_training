@@ -2,7 +2,7 @@
 
 @section('content')
     @if($users->count())
-    <div >
+    <div class="container h-100 d-flex justify-content-center" >
         <table class="table ">
         @include('shared.error')
             <thead  class="thead-dark">
@@ -24,10 +24,11 @@
                     <td>{{ $user->desc }}</td>
                     <td>
                         @foreach ($user->roles as $role)
-                            {{ $role->name }}
+                        <a class="btn btn-success">{{ $role->name }}
+                        </a>
                         @endforeach
                     </td>
-                    
+
                     <td class="text-right">
                         <a class="btn btn-sm btn-primary" href="{{ route('users.show', $user->id) }}">
                         <i class="fas fa-eye"></i> View
@@ -40,13 +41,13 @@
                                 <i class="fas fa-trash"></i> Delete
                             </button>
                         </form>
-                    
+
                     </td>
                 </tr>
                 @endforeach
-                
+
             </tbody>
-            
+
         </table>
         @else
         <h3 class="text-center alert alert-info">Empty!</h3>
