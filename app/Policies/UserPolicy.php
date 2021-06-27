@@ -24,6 +24,10 @@ class UserPolicy
         return $user->hasRole('admin');
     }
 
+    public function edit(User $user, $user2)
+    {
+        return $user === $user2;
+    }
     public function delete(User $user, $user1)
     {
         return $user->hasRole('admin');

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Tasks\StoreTaskRequest;
 use App\Models\Task;
 use App\Models\Timesheet;
+use Illuminate\Support\Facades\URL;
+
 use Session;
 
 class TaskController extends Controller
@@ -47,8 +49,8 @@ class TaskController extends Controller
         } else {
             Session::flash('error', 'Can not create task!');
         }
-        
-        return redirect()->route('timesheets.edit', $timesheet->id);
+
+        return redirect(URL::previous());
     }
 
     /**
@@ -90,7 +92,7 @@ class TaskController extends Controller
         } else {
             Session::flash('error', 'Can not Edit task!');
         }
-       return redirect()->route('timesheets.tasks.show', [$timesheet->id, $task->id]); 
+       return redirect()->route('timesheets.tasks.show', [$timesheet->id, $task->id]);
 
     }
 

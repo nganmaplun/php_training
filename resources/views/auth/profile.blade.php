@@ -9,7 +9,7 @@
                     <div class="text-center">
                         <img width="100px" height="100px" src="{{ asset('images/avatars/'.$user->avatar) }}">
                     </div>
-                    
+
                     <form enctype="multipart/form-data">
                         <div>
                             <h5 for="name" >{{ __('Name') }}</h5>

@@ -9,6 +9,7 @@ use App\Http\Requests\Timesheets\StoreTimesheetRequest;
 use App\Exports\TimesheetExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Team;
+use Illuminate\Support\Facades\URL;
 
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -68,7 +69,7 @@ class TimesheetController extends Controller
         } else {
             Session::flash('error', 'Can not create timesheets!');
         }
-        return redirect()->route('timesheets.list');
+        return redirect(URL::previous());
     }
 
     /**
@@ -111,7 +112,7 @@ class TimesheetController extends Controller
         } else {
             Session::flash('error', 'Can not edit timesheets!');
         }
-        return redirect()->route('timesheets.show', $timesheet->id);
+        return redirect(URL::previous());
     }
 
     public function export(){
@@ -134,7 +135,7 @@ class TimesheetController extends Controller
         } else {
             Session::flash('error', 'Can not delete timesheets!');
         }
-        
+
         return redirect()->route('timesheets.list');
     }
 }

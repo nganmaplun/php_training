@@ -12,6 +12,7 @@
                 <th scope="col">{{ __('Email') }}</th>
                 <th scope="col">{{ __('Desc') }}</th>
                 <th scope="col">{{ __('Role') }}</th>
+                <th scope="col">{{ __('Team') }}</th>
                 <th class="text-right">OPTIONS</th>
                 </tr>
             </thead>
@@ -25,6 +26,12 @@
                     <td>
                         @foreach ($user->roles as $role)
                         <a class="btn btn-success">{{ $role->name }}
+                        </a>
+                        @endforeach
+                    </td>
+                    <td>
+                        @foreach ($user->teams as $team)
+                        <a class="btn btn-info">{{ $team->name }}
                         </a>
                         @endforeach
                     </td>
