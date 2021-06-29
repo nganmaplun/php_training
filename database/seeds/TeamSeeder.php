@@ -13,10 +13,12 @@ class TeamSeeder extends Seeder
     {
         DB::table('teams')->insert([
             'name' => 'team1',
+            'manager_id'=> 2
         ]);
 
         DB::table('teams')->insert([
             'name' => 'team2',
+            'manager_id'=> 5,
         ]);
     }
 }
