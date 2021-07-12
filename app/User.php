@@ -4,6 +4,11 @@ namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Timesheet;
+use App\Models\Report;
+use App\Models\Team;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -23,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'role'
+        'password', 'remember_token',  
     ];
 
 
@@ -38,11 +43,35 @@ class User extends Authenticatable
 
     public function timesheets()
     {
-        return $this->hasMany('App\Models\Timesheet');
+        return $this->hasMany(Timesheet::class);
     }
 
     public function reports()
     {
-        return $this->hasMany('App\Models\Report');
+        return $this->hasMany(Report::class);
     }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_user', 'user_id', 'team_id');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+    }
+
+    public function hasRole(String $string)
+    {
+        foreach($this->roles as $role)
+        {
+            if($role->name == $string)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

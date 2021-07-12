@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\Users\RegisterRequest;
 use Session;
+use App\Models\Role;
+
 
 class RegisterController extends Controller
 {
@@ -40,8 +42,10 @@ class RegisterController extends Controller
     {
         $inputs = $request->all();
         $inputs['password'] = Hash::make($request->get('password'));
-
-        if ( $user = User::create($inputs) ) {
+        $user = User::create($inputs);
+        
+        if ( $user ) {
+            $user->roles()->attach(Role::USER);
             Session::flash('success', 'Register successful');
         } else {
             Session::flash('error', 'Register fail');

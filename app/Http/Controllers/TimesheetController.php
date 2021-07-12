@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Timesheet;
 use App\Http\Requests\Timesheets\StoreTimesheetRequest;
+use App\Exports\TimesheetExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Team;
 
 use Illuminate\Support\Facades\Auth;
 use Session;
@@ -19,6 +22,7 @@ class TimesheetController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Auth::user());
         $timesheets = Timesheet::all();
 
         return view('timesheets.index', compact('timesheets'));
@@ -28,6 +32,17 @@ class TimesheetController extends Controller
     {
         $timesheets = Auth::user()->timesheets()->get();
         return view('timesheets.index', compact('timesheets'));
+    }
+
+    public function viewTimesheetsOfTeam()
+    {
+        $manager = Auth::user();
+        $this->authorize('viewTeam', Timesheet::class, $manager);
+        $teams = Team::where('manager_id', $manager->id)->get();
+        $team = $teams[0];
+        $users = $team->users;
+
+        return view('timesheets.team', compact('users'));
     }
 
     /**
@@ -75,6 +90,7 @@ class TimesheetController extends Controller
      */
     public function edit(Timesheet $timesheet)
     {
+        $this->authorize('update', $timesheet );
         return view('timesheets.edit', compact('timesheet'));
     }
 
@@ -87,6 +103,7 @@ class TimesheetController extends Controller
      */
     public function update(Request $request, Timesheet $timesheet)
     {
+        $this->authorize('update', $timesheet );
         $inputs = $request->all();
         if (!isset($inputs['completed'])) $inputs['completed'] = false;
         if ($timesheet->update($inputs)) {
@@ -97,6 +114,11 @@ class TimesheetController extends Controller
         return redirect()->route('timesheets.show', $timesheet->id);
     }
 
+    public function export(){
+        $this->authorize('export', Timesheet::class, Auth::user());
+        return Excel::download(new TimesheetExport, 'timesheet.xlsx');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -105,6 +127,8 @@ class TimesheetController extends Controller
      */
     public function destroy(Timesheet $timesheet)
     {
+        $this->authorize('delete', $timesheet );
+
         if ($timesheet->delete()) {
             Session::flash('success', 'Delete timesheets was successful!');
         } else {
