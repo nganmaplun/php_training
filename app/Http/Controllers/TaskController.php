@@ -2,28 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Requests\Tasks\StoreTaskRequest;
+use Session;
 use App\Models\Task;
 use App\Models\Timesheet;
-use Session;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Tasks\StoreTaskRequest;
+use App\Services\Interfaces\TaskServiceInterface;
 
 class TaskController extends Controller
 {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    protected $taskService;
+
+    public function __construct(TaskServiceInterface $taskService)
     {
-        $tasks = Task::all();
-
-        return view('tasks.index', compact('tasks'));
+        $this->taskService = $taskService;
     }
-
+   
     /**
      * Show the form for creating a new resource.
      *
@@ -42,7 +38,7 @@ class TaskController extends Controller
      */
     public function store(Timesheet $timesheet, StoreTaskRequest $request)
     {
-        if ( $timesheet->tasks()->create($request->all()) ) {
+        if ( $this->taskService->createTask($timesheet, $request) ) {
             Session::flash('success', 'Create task was successful!');
         } else {
             Session::flash('error', 'Can not create task!');
@@ -80,12 +76,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Timesheet $timesheet, Task $task)
+    public function update(Task $task, Request $request)
     {
-       $inputs = $request->all();
-       if (!isset($inputs['completed'])) $inputs['completed'] = false;
 
-       if ( $task->update($inputs) ) {
+       if ( $this->taskService->updateTask($task, $request) ) {
             Session::flash('success', 'Edit task was successful!');
         } else {
             Session::flash('error', 'Can not Edit task!');
@@ -100,9 +94,9 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Timesheet $timesheet,Task $task)
+    public function destroy(Task $task)
     {
-        if ( $task->delete() ) {
+        if ( $this->taskService->deleteTask($task) ) {
             Session::flash('success', 'Delete task was successful!');
         } else {
             Session::flash('error', 'Can not delete task!');

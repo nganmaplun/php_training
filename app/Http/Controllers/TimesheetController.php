@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Timesheet;
-use App\Http\Requests\Timesheets\StoreTimesheetRequest;
-use App\Exports\TimesheetExport;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Models\Team;
-
-use Illuminate\Support\Facades\Auth;
 use Session;
+use App\Models\Team;
+use App\Models\Timesheet;
+use Illuminate\Http\Request;
+use App\Exports\TimesheetExport;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Interfaces\TimesheetServiceInterface;
+use App\Http\Requests\Timesheets\StoreTimesheetRequest;
 
 class TimesheetController extends Controller
 {
+    protected $timesheetService;
+
+    public function __construct(TimesheetServiceInterface $timesheetService){
+        $this->timesheetService = $timesheetService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,25 +29,23 @@ class TimesheetController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Auth::user());
-        $timesheets = Timesheet::all();
+        $timesheets = $this->timesheetService->getList();
 
         return view('timesheets.index', compact('timesheets'));
     }
 
     public function list()
     {
-        $timesheets = Auth::user()->timesheets()->get();
+
+        $timesheets = $this->timesheetService->getListTimesheetOfAuth();
         return view('timesheets.index', compact('timesheets'));
     }
 
     public function viewTimesheetsOfTeam()
     {
-        $manager = Auth::user();
-        $this->authorize('viewTeam', Timesheet::class, $manager);
-        $teams = Team::where('manager_id', $manager->id)->get();
-        $team = $teams[0];
-        $users = $team->users;
+        $this->authorize('viewTeam', Timesheet::class, Auth::user());
 
+        $users = $this->timesheetService->viewTimesheetsOfTeam();
         return view('timesheets.team', compact('users'));
     }
 
@@ -52,7 +56,7 @@ class TimesheetController extends Controller
      */
     public function create()
     {
-       return view('timesheets.create');
+        return view('timesheets.create');
     }
 
     /**
@@ -63,7 +67,8 @@ class TimesheetController extends Controller
      */
     public function store(StoreTimesheetRequest $request)
     {
-        if ( $timesheet = Auth::user()->timesheets()->create($request->all()) ) {
+        $timesheet = $this->timesheetService->createTimesheet($request);
+        if ($timesheet) {
             Session::flash('success', 'Create timesheets was successful!');
         } else {
             Session::flash('error', 'Can not create timesheets!');
@@ -79,7 +84,7 @@ class TimesheetController extends Controller
      */
     public function show(Timesheet $timesheet)
     {
-       return view('timesheets.show', compact('timesheet'));
+        return view('timesheets.show', compact('timesheet'));
     }
 
     /**
@@ -90,7 +95,7 @@ class TimesheetController extends Controller
      */
     public function edit(Timesheet $timesheet)
     {
-        $this->authorize('update', $timesheet );
+        $this->authorize('update', $timesheet);
         return view('timesheets.edit', compact('timesheet'));
     }
 
@@ -101,12 +106,11 @@ class TimesheetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Timesheet $timesheet)
+    public function update(Timesheet $timesheet, Request $request )
     {
-        $this->authorize('update', $timesheet );
-        $inputs = $request->all();
-        if (!isset($inputs['completed'])) $inputs['completed'] = false;
-        if ($timesheet->update($inputs)) {
+        $this->authorize('update', $timesheet);
+       
+        if ($this->timesheetService->updateTimesheet($timesheet, $request)) {
             Session::flash('success', 'Edit timesheets was successful!');
         } else {
             Session::flash('error', 'Can not edit timesheets!');
@@ -114,9 +118,10 @@ class TimesheetController extends Controller
         return redirect()->route('timesheets.show', $timesheet->id);
     }
 
-    public function export(){
+    public function export()
+    {
         $this->authorize('export', Timesheet::class, Auth::user());
-        return Excel::download(new TimesheetExport, 'timesheet.xlsx');
+        return $this->timesheetService->export();
     }
 
     /**
@@ -127,14 +132,14 @@ class TimesheetController extends Controller
      */
     public function destroy(Timesheet $timesheet)
     {
-        $this->authorize('delete', $timesheet );
-
-        if ($timesheet->delete()) {
+        $this->authorize('delete', $timesheet);
+        
+        if ($this->timesheetService->deleteTimesheet($timesheet)) {
             Session::flash('success', 'Delete timesheets was successful!');
         } else {
             Session::flash('error', 'Can not delete timesheets!');
         }
-        
+
         return redirect()->route('timesheets.list');
     }
 }
