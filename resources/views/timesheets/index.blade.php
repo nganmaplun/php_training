@@ -2,10 +2,10 @@
 @section('header')
 <div>
   <h1>
-    <i class="fas fa-align-justify"></i> TimeSheet
+     TimeSheet
     <br>
     <a class="btn btn-success float-left" href="{{ route('timesheets.export') }}"><i class="fas fa-plus"></i> Export</a>
-    <a class="btn btn-success float-right" href="{{ route('timesheets.create') }}"><i class="fas fa-plus"></i> Create new timesheet</a>
+    <a class="btn btn-success float-right"  data-toggle="modal" data-target="#createTimesheet"><i class="fas fa-plus"></i> Create new timesheet</a>
     <br>
   </h1>
 </div>
@@ -14,6 +14,7 @@
     
 @if($timesheets->count())
 <div >
+  
     <table class="table ">
       @include('shared.error')
         <thead  class="thead-dark">
@@ -70,6 +71,20 @@
         </tbody>
           
     </table>
+    <div class="modal fade" id="createTimesheet" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            @include('timesheets.create')
+          </div>
+        </div>
+      </div>
+    </div>
     @else
     <h3 class="text-center alert alert-info">Empty!</h3>
     @endif

@@ -26,7 +26,7 @@
 
                 <div class="form-group">
                     <label for="plan-field">{{ __('Task') }}</label>
-                        <a class="btn btn-success float-center" href="{{ route('timesheets.tasks.create', $timesheet->id) }}"><i class="fas fa-plus"></i> Add task</a>
+                        <a class="btn btn-success float-center" href="{{ route('timesheets.tasks.create', $timesheet->id) }}" data-toggle="modal" data-target="#createTask"><i class="fas fa-plus"></i> Add task</a>
                         @foreach ($timesheet->tasks()->get() as $task)
                             <a class="btn btn-sm btn-info" href="{{ route('timesheets.tasks.show',[ $timesheet->id, $task->id]) }}">
                             <i class="fas fa-eye"></i> {{ $task->name }}
@@ -39,6 +39,20 @@
                     <a class="btn btn-link pull-right" href="{{ route('timesheets.list') }}"><i class="fas fa-backward"></i> Back</a>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="modal fade" id="createTask" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                <div class="modal-body">
+                    @include('tasks.create')
+                </div>
+            </div>
         </div>
     </div>
 </div>

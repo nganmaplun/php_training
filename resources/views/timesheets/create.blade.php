@@ -1,12 +1,4 @@
-@extends('layouts.app')
 
-@section('header')
-<div class="page-header">
-  <h1><i class="fas fa-plus"></i> Timesheet / Create </h1>
-</div>
-@endsection
-
-@section('content')
 <div class="container">
 <div class="row">
   <div class="col-md-12">
@@ -39,12 +31,10 @@
         <textarea name="plan" id="plan-field" class="form-control" rows="3"></textarea>
       </div>
 
-      <div class="well well-sm">
+      <div class="well well-sm text-center">
         <button type="submit" class="btn btn-primary" >Create</button>
-        <a class="btn btn-link pull-right" href="{{ route('timesheets.list') }}"><i class="fas fa-backward"></i> Back</a>
       </div>
     </form>
   </div>
 </div>
 </div>
-@endsection
