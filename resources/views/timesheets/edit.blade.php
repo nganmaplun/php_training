@@ -11,7 +11,6 @@
             <form action="{{ route('timesheets.update', $timesheet->id) }}" method="POST">
                 @csrf
                 @method("PUT")
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <h1 class="text-center">{{ __('Date') }}  {{ $timesheet->date }}</h1>
                 
                 <div class="form-group">

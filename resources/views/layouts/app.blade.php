@@ -26,6 +26,9 @@
     <!-- font-awsome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
     
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+
     <style>
         .navbar-brand{
             font-family: "Sofia", sans-serif;
@@ -39,6 +42,7 @@
             border-radius: 50%;
         }
     </style>
+    @yield('script')
 
 </head>
 <body>
@@ -65,6 +69,9 @@
                         @else
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="{{ route('users.index') }}">Users</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="{{ route('teams.index') }}" class="nav-link active">Teams</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -125,7 +132,8 @@
         </main>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
 </html>

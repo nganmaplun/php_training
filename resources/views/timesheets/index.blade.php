@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('header')
 <div>
   <h1>
@@ -10,8 +11,8 @@
   </h1>
 </div>
 @endsection
+
 @section('content')
-    
 @if($timesheets->count())
 <div >
   
@@ -71,6 +72,10 @@
         </tbody>
           
     </table>
+    
+    @else
+    <h3 class="text-center alert alert-info">Empty!</h3>
+    @endif
     <div class="modal fade" id="createTimesheet" role="dialog">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -85,8 +90,5 @@
         </div>
       </div>
     </div>
-    @else
-    <h3 class="text-center alert alert-info">Empty!</h3>
-    @endif
 </div>
 @endsection
