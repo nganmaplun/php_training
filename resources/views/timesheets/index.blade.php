@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('header')
 <div>
   <h1>
@@ -10,8 +11,8 @@
   </h1>
 </div>
 @endsection
+
 @section('content')
-    
 @if($timesheets->count())
 <div >
   

@@ -36,6 +36,7 @@ Route::get('timesheets/team', 'TimesheetController@viewTimesheetsOfTeam')->name(
 
 Route::resource('timesheets', 'TimesheetController');
 Route::resource('timesheets.tasks', 'TaskController');
+Route::resource('teams', 'TeamController');
 
 Route::get('reports', 'ReportController@index')->name('reports');
 Route::post('reports/store', 'ReportController@store')->name('reports.store');

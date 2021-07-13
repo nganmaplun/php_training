@@ -12,6 +12,7 @@ class AppServiceProvider extends ServiceProvider
         Interfaces\TimesheetServiceInterface::class => Services\TimesheetService::class,
         Interfaces\TaskServiceInterface::class => Services\TaskService::class,
         Interfaces\UserServiceInterface::class => Services\UserService::class,
+        Interfaces\TeamServiceInterface::class => Services\TeamService::class,
     ];
     /**
      * Register any application services.
