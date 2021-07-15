@@ -33,14 +33,21 @@ class TimesheetService extends Service implements TimesheetServiceInterface {
     }
     public function createTimesheet(Request $request)
     {   
-        $timesheet = Auth::user()->timesheets()->create($request->all());
+        $params = [
+            'date' => $request->get('date'),
+            'problem' => $request->get('problem', 'Non Problem'),
+            'plan' => $request->get('plan', 'Non Plan')
+        ];
+        $timesheet = Auth::user()->timesheets()->create($params);
         return $timesheet;
     }
     public function updateTimesheet(Timesheet $timesheet, Request $request)
     {
-        $inputs = $request->all();
-        
-        return $timesheet->update($inputs);
+        $params = [
+            'problem' => $request->get('problem', 'Non Problem'),
+            'plan' => $request->get('plan', 'Non Plan')
+        ];        
+        return $timesheet->update($params);
     }
     public function deleteTimesheet(Timesheet $timesheet)
     {

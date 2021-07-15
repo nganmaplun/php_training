@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Task') }}</div>
                 <div class="card-body">
-                    <form enctype="multipart/form-data" method="POST" action="{{ route('timesheets.tasks.update', [$timesheet, $task->id]) }}" >
+                    <form enctype="multipart/form-data" method="POST" action="{{ route('timesheets.tasks.update', [$timesheet->id, $task->id]) }}" >
                         @method("PUT")
                         @csrf
 

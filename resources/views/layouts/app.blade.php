@@ -42,7 +42,7 @@
             border-radius: 50%;
         }
     </style>
-    @yield('script')
+    @yield('style')
 
 </head>
 <body>

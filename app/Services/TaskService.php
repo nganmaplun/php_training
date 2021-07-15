@@ -11,14 +11,25 @@ class TaskService extends Service implements TaskServiceInterface {
     
     public function createTask(Timesheet $timesheet, Request $request)
     {
-        $task = $timesheet->tasks()->create($request->all());
+        $params = [
+            'name' => $request->get('name'),
+            'desc' => $request->get('desc', 'No Desc'),
+            'use_time' => $request->get('use_time'),
+
+        ];
+        $task = $timesheet->tasks()->create($params);
         return $task;
     }
-    public function updateTask(Task $task, Request $request)
+    public function updateTask(Timesheet $timesheet, Task $task, Request $request)
     {       
-        $params = $request->all();
+        $params = [
+            'name' => $request->get('name'),
+            'desc' => $request->get('desc', 'No Desc'),
+            'use_time' => $request->get('use_time'),
 
-        return $task->update($params);
+        ];
+        $task->update($params);
+        return $task;
     }
     public function deleteTask(Task $task)
     {

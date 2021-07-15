@@ -76,10 +76,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Task $task, Request $request)
+    public function update(Timesheet $timesheet,Task $task, Request $request)
     {
 
-       if ( $this->taskService->updateTask($task, $request) ) {
+       if ( $this->taskService->updateTask($timesheet, $task, $request) ) {
             Session::flash('success', 'Edit task was successful!');
         } else {
             Session::flash('error', 'Can not Edit task!');
