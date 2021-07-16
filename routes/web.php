@@ -44,5 +44,8 @@ Route::get('reports/store', 'ReportController@store')->name('reports.store');
 
 Route::get('users/index', 'UserController@index')->name('users.index');
 Route::get('users/{user}', 'UserController@show')->name('users.show');
+Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
+Route::put('users/{user}', 'UserController@update')->name('users.update');
+
 Route::delete('users/{user}', 'UserController@destroy')->name('users.destroy');
 

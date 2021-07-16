@@ -44,7 +44,7 @@ class TaskController extends Controller
             Session::flash('error', 'Can not create task!');
         }
         
-        return redirect()->route('timesheets.edit', $timesheet->id);
+        return redirect()->back();
     }
 
     /**
@@ -76,10 +76,10 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Task $task, Request $request)
+    public function update(Timesheet $timesheet,Task $task, Request $request)
     {
 
-       if ( $this->taskService->updateTask($task, $request) ) {
+       if ( $this->taskService->updateTask($timesheet, $task, $request) ) {
             Session::flash('success', 'Edit task was successful!');
         } else {
             Session::flash('error', 'Can not Edit task!');
@@ -94,13 +94,13 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Task $task)
+    public function destroy(Timesheet $timesheet, Task $task)
     {
-        if ( $this->taskService->deleteTask($task) ) {
+        if ($this->taskService->deleteTask($timesheet, $task)) {
             Session::flash('success', 'Delete task was successful!');
         } else {
             Session::flash('error', 'Can not delete task!');
         }
-        return redirect()->route('timesheets.list', $timesheet->id);
+        return back();
     }
 }

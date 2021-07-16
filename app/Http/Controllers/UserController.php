@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Services\Interfaces\UserServiceInterface;
 
 class UserController extends Controller
@@ -26,6 +28,22 @@ class UserController extends Controller
     public function show(User $user)
     {
         return view('users.show', compact('user'));
+    }
+
+    public function edit(User $user)
+    {
+        $roles = Role::all();
+        return view('users.edit', compact('user','roles'));
+    }
+
+    public function update(User $user, Request $request)
+    {
+        if ($this->userService->updateUser($user, $request)) {
+            Session::flash('success','Change roles success');
+        } else {
+            Session::flash('error','Change roles fails');
+        }
+        return redirect()->back();
     }
 
     public function destroy(User $user)

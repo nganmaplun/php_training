@@ -35,7 +35,7 @@
 
                 <div class="well well-sm">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a class="btn btn-link pull-right" href="{{ route('timesheets.list') }}"><i class="fas fa-backward"></i> Back</a>
+                    <a class="btn btn-link pull-right" href="{{ url()->previous() }}"><i class="fas fa-backward"></i> Back</a>
                 </div>
             </form>
         </div>
