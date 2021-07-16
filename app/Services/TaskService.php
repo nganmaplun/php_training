@@ -31,7 +31,7 @@ class TaskService extends Service implements TaskServiceInterface {
         $task->update($params);
         return $task;
     }
-    public function deleteTask(Task $task)
+    public function deleteTask(Timesheet $timesheet, Task $task)
     {
         return $task->delete();
     }

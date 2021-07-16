@@ -22,7 +22,7 @@
                             <p> {{ $task->use_time }}</p>
                         </div>
                         <a class="btn btn-success float-center" href="{{ route('timesheets.tasks.edit',[$timesheet->id, $task->id]) }}">
-                            <i class="fas fa-plus"></i> Edit Task
+                            <i class="fas fa-edit"></i> Edit Task
                         </a>
 
                         <form action="{{ route('timesheets.tasks.destroy', [$timesheet,$task->id]) }}" method="POST" style="display: inline;"
@@ -34,7 +34,7 @@
                             </button>
                         </form>
                         
-                        <a class="btn  float-center" href="{{ route('timesheets.list',$timesheet->id) }}"><i class="fas fa-plus"></i> Back</a>
+                        <a class="btn  float-center" href="{{ url()->previous() }}"><i class="fas fa-backward"></i> Back</a>
 
                     </div>
                 </div>

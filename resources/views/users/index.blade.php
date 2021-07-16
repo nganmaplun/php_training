@@ -33,6 +33,9 @@
                         <a class="btn btn-sm btn-primary" href="{{ route('users.show', $user->id) }}">
                         <i class="fas fa-eye"></i> View
                         </a>
+                        <a class="btn btn-sm btn-warning" href="{{ route('users.edit', $user->id) }}">
+                            <i class="fas fa-edit"></i> Edit
+                          </a>
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;"
                             onsubmit="return confirm('Delete? Are you sure?');">
                             @csrf

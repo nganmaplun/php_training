@@ -115,7 +115,7 @@ class TimesheetController extends Controller
         } else {
             Session::flash('error', 'Can not edit timesheets!');
         }
-        return redirect()->route('timesheets.show', $timesheet->id);
+        return redirect()->route('timesheets.list');
     }
 
     public function export()
